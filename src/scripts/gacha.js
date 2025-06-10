@@ -1,9 +1,9 @@
 const items = [
-    { name: "Common Item", rarity: "common" },
-    { name: "Uncommon Item", rarity: "uncommon" },
-    { name: "Rare Item", rarity: "rare" },
-    { name: "Epic Item", rarity: "epic" },
-    { name: "Legendary Item", rarity: "legendary" }
+    { name: "Item", rarity: "★"},
+    { name: "Item", rarity: "★★" },
+    { name: "Item", rarity: "★★★" },
+    { name: "Item", rarity: "★★★★" },
+    { name: "Item ", rarity: "★★★★★" }
 ];
 
 function drawItem() {
@@ -13,7 +13,8 @@ function drawItem() {
 
 function displayResult(item) {
     const resultDiv = document.getElementById("result");
-    resultDiv.innerHTML = `voçe ganhou: <strong>${item.name}</strong> (${item.rarity})`;
+    const rarityClass = item.rarity === "★★★★★" ? "rarity-five" : "";
+    resultDiv.innerHTML = `voçe ganhou: <strong>${item.name}</strong> (<span class="${rarityClass}">${item.rarity}</span>)`;
 }
 
 document.getElementById("draw-button").addEventListener("click", function() {
