@@ -7,22 +7,19 @@ const items = [
 ];
 
 let spinCount = 0;
-let pityActive = false;
+let pityHistory = [];
 
 function drawItemWithPity() {
     spinCount++;
-    // Se chegou a 90 giros, ativa o pity
     if (spinCount >= 90) {
-        spinCount = 0; // reseta o contador
-        pityActive = false;
-        // Retorna garantido um ★★★★★
+        pityHistory.push(spinCount); // Salva quantos giros foram necessários
+        spinCount = 0;
         return items.find(item => item.rarity === "★★★★★");
     }
     const item = drawItem();
-    // Se tirou um ★★★★★, reseta o contador
     if (item.rarity === "★★★★★") {
+        pityHistory.push(spinCount); // Salva quantos giros foram necessários
         spinCount = 0;
-        pityActive = false;
     }
     return item;
 }
