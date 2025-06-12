@@ -127,3 +127,7 @@ function displayTenResults(items) {
 document.getElementById("close-result").addEventListener("click", function() {
     document.getElementById("result-screen").style.display = "none";
 });
+document.getElementById("draw-again").addEventListener("click", function() {
+    drawTenItems();
+    updatePityDisplay(); // Atualiza o pity
+});
