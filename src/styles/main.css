@@ -80,12 +80,7 @@ h1 {
     padding: 10px 20px;
     cursor: pointer;
 }
-#show-pity {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-}
+
 #result-screen {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -96,4 +91,13 @@ h1 {
     align-items: center;
     justify-content: center;
     z-index: 2000;
+}
+#close-result {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
 }

@@ -37,10 +37,8 @@ function drawItem() {
 
 // No pity também:
 function drawItemWithPity() {
-    spinCount++;
-    if (spinCount >= 90) {
-        // Garante 5 estrelas, registra o pity e zera o contador
-        pityHistory.push(spinCount);
+    if (spinCount >= 89) { // 89 porque vamos contar o giro atual
+        pityHistory.push(spinCount + 1);
         const fiveStar = getRandomFiveStar();
         spinCount = 0;
         return fiveStar;
@@ -48,8 +46,10 @@ function drawItemWithPity() {
 
     const item = drawItem();
     if (item.rarity === "★★★★★") {
-        pityHistory.push(spinCount);
+        pityHistory.push(spinCount + 1);
         spinCount = 0;
+    } else {
+        spinCount++;
     }
     return item;
 }
@@ -71,13 +71,13 @@ function drawTenItems() {
     for (let i = 0; i < 10; i++) {
         const item = drawItemWithPity();
         results.push(item);
-        // Se o pity foi ativado, spinCount já foi resetado dentro de drawItemWithPity
-        // Não precisa fazer nada extra aqui
     }
 
-    // Garante pelo menos um ★★★★ (exatamente quatro estrelas)
+    // Só garante um 4 estrelas se NÃO houver nenhum 5 estrelas
+    const hasFiveStar = results.some(item => item.rarity === "★★★★★");
     const hasFourStar = results.some(item => item.rarity === "★★★★");
-    if (!hasFourStar) {
+
+    if (!hasFiveStar && !hasFourStar) {
         const fourStarItems = items.filter(item => item.rarity === "★★★★");
         const guaranteed = fourStarItems[Math.floor(Math.random() * fourStarItems.length)];
         results[results.length - 1] = guaranteed;
@@ -85,7 +85,6 @@ function drawTenItems() {
 
     displayTenResults(results);
 }
-
 function displayTenResults(items) {
     const resultDiv = document.getElementById("result");
     resultDiv.innerHTML = items.map(item => {
@@ -96,20 +95,24 @@ function displayTenResults(items) {
 
 // ...existing code...
 
-// Listener correto para giro único (apenas UMA VEZ)
+function updatePityDisplay() {
+    document.getElementById("pity-value").textContent = `Pity atual: ${spinCount}`;
+}
+
+// Listener para giro único
 document.getElementById("draw-button").addEventListener("click", function() {
     const drawnItem = drawItemWithPity();
     displayResult(drawnItem);
+    updatePityDisplay();
 });
 
 // Listener para giro 10x
 document.getElementById("draw-ten-button").addEventListener("click", function() {
     drawTenItems();
     document.getElementById("meu-video").play();
+    updatePityDisplay(); // Atualiza o pity
 });
-document.getElementById("show-pity").addEventListener("click", function() {
-    document.getElementById("pity-value").textContent = `Pity atual: ${spinCount}`;
-});
+
 function displayTenResults(items) {
     const resultScreen = document.getElementById("result-screen");
     const resultList = document.getElementById("result-list");
