@@ -80,3 +80,9 @@ h1 {
     padding: 10px 20px;
     cursor: pointer;
 }
+#show-pity {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
