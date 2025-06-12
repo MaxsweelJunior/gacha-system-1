@@ -1,8 +1,8 @@
 const items = [
-    { name: "Item", tipy: "item", rarity: "★" },
-    { name: "Item", tipy: "item", rarity: "★★" },
-    { name: "Item", tipy: "item", rarity: "★★★" },
-    { name: "Item", tipy: "item", rarity: "★★★★" },
+    { name: "Item", type: "item", rarity: "★" },
+    { name: "Item", type: "item", rarity: "★★" },
+    { name: "Item", type: "item", rarity: "★★★" },
+    { name: "Item", type: "item", rarity: "★★★★" },
     { name: "qiqi", tipy: "personagem", rarity: "★★★★★" },
     { name: "mavuika", tipy: "personagem", rarity: "★★★★★" }
     
@@ -31,7 +31,7 @@ function drawItem() {
             return items[i];
         }
     }
-    return items[0];
+    return items[0]; ty
 }
 
 
@@ -39,11 +39,13 @@ function drawItem() {
 function drawItemWithPity() {
     spinCount++;
     if (spinCount >= 90) {
-    pityHistory.push(spinCount);
-    spinCount = 0;
-    return getRandomFiveStar();
-}
-    
+        // Garante 5 estrelas, registra o pity e zera o contador
+        pityHistory.push(spinCount);
+        const fiveStar = getRandomFiveStar();
+        spinCount = 0;
+        return fiveStar;
+    }
+
     const item = drawItem();
     if (item.rarity === "★★★★★") {
         pityHistory.push(spinCount);
@@ -107,4 +109,18 @@ document.getElementById("draw-ten-button").addEventListener("click", function() 
 });
 document.getElementById("show-pity").addEventListener("click", function() {
     document.getElementById("pity-value").textContent = `Pity atual: ${spinCount}`;
+});
+function displayTenResults(items) {
+    const resultScreen = document.getElementById("result-screen");
+    const resultList = document.getElementById("result-list");
+    resultList.innerHTML = items.map(item => {
+        const rarityClass = item.rarity === "★★★★★" ? "rarity-five" : item.rarity === "★★★★" ? "rarity-four" : "";
+        return `voçe ganhou: <strong>${item.name}</strong> (<span class="${rarityClass}">${item.rarity}</span>)`;
+    }).join("<br>");
+    resultScreen.style.display = "flex";
+}
+
+// Botão para fechar a tela de resultados
+document.getElementById("close-result").addEventListener("click", function() {
+    document.getElementById("result-screen").style.display = "none";
 });
