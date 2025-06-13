@@ -7,6 +7,11 @@ const items = [
     { name: "mavuika", tipy: "personagem", rarity: "★★★★★" }
     
 ];
+let countFive = 0;
+let countFour = 0;
+let countThree = 0;
+let countTwo = 0;
+let countOne = 0;
 
 let spinCount = 0;
 let pityHistory = [];
@@ -38,10 +43,12 @@ function drawItem() {
 
 // No pity também:
 function drawItemWithPity() {
-    if (spinCount >= 89) { // 89 porque vamos contar o giro atual
+    totalSpins++; // Adicione esta linha no início da função
+    if (spinCount >= 89) {
         pityHistory.push(spinCount + 1);
         const fiveStar = getRandomFiveStar();
         spinCount = 0;
+        countFive++;
         return fiveStar;
     }
 
@@ -49,8 +56,13 @@ function drawItemWithPity() {
     if (item.rarity === "★★★★★") {
         pityHistory.push(spinCount + 1);
         spinCount = 0;
+        countFive++;
     } else {
         spinCount++;
+        if (item.rarity === "★★★★") countFour++;
+        else if (item.rarity === "★★★") countThree++;
+        else if (item.rarity === "★★") countTwo++;
+        else if (item.rarity === "★") countOne++;
     }
     return item;
 }
@@ -135,11 +147,14 @@ document.getElementById("draw-again").addEventListener("click", function() {
 document.getElementById("show-history").addEventListener("click", function() {
     const historyScreen = document.getElementById("history-screen");
     const historyList = document.getElementById("history-list");
-    // Mostra o histórico de pity e total de giros
     historyList.innerHTML = `
         <div style="margin-bottom:10px;">
-            <strong>Total de giros:</strong> ${totalSpins}<br>
-           
+            De ${totalSpins} giros você pegou:<br>
+            <strong>${countFive}</strong> ★★★★★ <br>
+            <strong>${countFour}</strong> ★★★★ <br>
+            <strong>${countThree}</strong> ★★★ <br>
+            <strong>${countTwo}</strong> ★★ <br>
+            <strong>${countOne}</strong> ★ <br><br>
         </div>
     `;
     historyScreen.style.display = "flex";
