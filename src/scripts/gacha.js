@@ -7,6 +7,10 @@ const items = [
     { name: "mavuika", tipy: "personagem", rarity: "★★★★★" }
     
 ];
+let countQiqi = 0;
+let countMavuika = 0;
+
+let countFourGuaranteed = 0;
 let countFive = 0;
 let countFour = 0;
 let countThree = 0;
@@ -45,26 +49,30 @@ function drawItem() {
 function drawItemWithPity() {
     totalSpins++; // Adicione esta linha no início da função
     if (spinCount >= 89) {
-        pityHistory.push(spinCount + 1);
-        const fiveStar = getRandomFiveStar();
-        spinCount = 0;
-        countFive++;
-        return fiveStar;
-    }
+    pityHistory.push(spinCount + 1);
+    const fiveStar = getRandomFiveStar();
+    spinCount = 0;
+    countFive++;
+    if (fiveStar.name === "qiqi") countQiqi++;
+    if (fiveStar.name === "mavuika") countMavuika++;
+    return fiveStar;
+}
 
-    const item = drawItem();
-    if (item.rarity === "★★★★★") {
-        pityHistory.push(spinCount + 1);
-        spinCount = 0;
-        countFive++;
-    } else {
-        spinCount++;
-        if (item.rarity === "★★★★") countFour++;
-        else if (item.rarity === "★★★") countThree++;
-        else if (item.rarity === "★★") countTwo++;
-        else if (item.rarity === "★") countOne++;
-    }
-    return item;
+const item = drawItem();
+if (item.rarity === "★★★★★") {
+    pityHistory.push(spinCount + 1);
+    spinCount = 0;
+    countFive++;
+    if (item.name === "qiqi") countQiqi++;
+    if (item.name === "mavuika") countMavuika++;
+} else {
+    spinCount++;
+    if (item.rarity === "★★★★") countFour++;
+    else if (item.rarity === "★★★") countThree++;
+    else if (item.rarity === "★★") countTwo++;
+    else if (item.rarity === "★") countOne++;
+}
+return item;
 }
 
 function displayResult(item) {
@@ -94,6 +102,8 @@ function drawTenItems() {
         const fourStarItems = items.filter(item => item.rarity === "★★★★");
         const guaranteed = fourStarItems[Math.floor(Math.random() * fourStarItems.length)];
         results[results.length - 1] = guaranteed;
+        countFour++;
+        countFourGuaranteed++; // Conta o garantido
     }
 
     displayTenResults(results);
@@ -148,15 +158,16 @@ document.getElementById("show-history").addEventListener("click", function() {
     const historyScreen = document.getElementById("history-screen");
     const historyList = document.getElementById("history-list");
     historyList.innerHTML = `
-        <div style="margin-bottom:10px;">
-            De ${totalSpins} giros você pegou:<br>
-            <strong>${countFive}</strong> ★★★★★ <br>
-            <strong>${countFour}</strong> ★★★★ <br>
-            <strong>${countThree}</strong> ★★★ <br>
-            <strong>${countTwo}</strong> ★★ <br>
-            <strong>${countOne}</strong> ★ <br><br>
-        </div>
-    `;
+    <div style="margin-bottom:10px;">
+        De ${totalSpins} giros você pegou:<br> <br>
+        
+        <strong>${countFive}</strong> ★★★★★ (sendo qiqi: ${countQiqi}, mavuika: ${countMavuika})<br>
+        <strong>${countFour}</strong> ★★★★ (sendo ${countFourGuaranteed} garantidos)<br>
+        <strong>${countThree}</strong> ★★★ <br>
+        <strong>${countTwo}</strong> ★★ <br>
+        <strong>${countOne}</strong> ★ <br><br>
+    </div>
+`;
     historyScreen.style.display = "flex";
 });
 

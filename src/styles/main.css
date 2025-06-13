@@ -146,3 +146,14 @@ h1 {
     padding: 10px 20px;
     cursor: pointer;
 }
+#pity-value {
+    margin-left: 40%;
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
