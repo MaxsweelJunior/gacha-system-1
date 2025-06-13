@@ -10,6 +10,7 @@ const items = [
 
 let spinCount = 0;
 let pityHistory = [];
+let totalSpins = 0;
 
 function getRandomFiveStar() {
     // 50% chance para cada personagem 5 estrelas
@@ -130,4 +131,20 @@ document.getElementById("close-result").addEventListener("click", function() {
 document.getElementById("draw-again").addEventListener("click", function() {
     drawTenItems();
     updatePityDisplay(); // Atualiza o pity
+});
+document.getElementById("show-history").addEventListener("click", function() {
+    const historyScreen = document.getElementById("history-screen");
+    const historyList = document.getElementById("history-list");
+    // Mostra o histórico de pity e total de giros
+    historyList.innerHTML = `
+        <div style="margin-bottom:10px;">
+            <strong>Total de giros:</strong> ${totalSpins}<br>
+           
+        </div>
+    `;
+    historyScreen.style.display = "flex";
+});
+
+document.getElementById("close-history").addEventListener("click", function() {
+    document.getElementById("history-screen").style.display = "none";
 });
