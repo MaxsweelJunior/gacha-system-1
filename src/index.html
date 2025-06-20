@@ -18,21 +18,35 @@
         <span id="pity-value"></span>
     </div>
     <div id="history-screen" style="display:none;">
-        <h2>Histórico de Giros</h2>
-        <div id="history-list"></div>
+    <h2>Histórico de Giros</h2>
+    <div id="history-list"></div>
+    <div class="result-buttons">
+        <button id="luck-level">mais iformções</button>
         <button id="close-history">Fechar</button>
     </div>
+</div>
     <div id="result"></div>
 </div>
     
     <div id="result-screen" style="display:none;">
-    <h2>Resultados</h2>
-    <div id="result-list"></div>
-    <div class="result-buttons">
-    <button id="draw-again">Girar Novamente</button>
-    <button id="close-result">Fechar</button>
-</div>
-</div>
+        <h2>Resultados</h2>
+        <div id="result-list"></div>
+        <div class="result-buttons">
+            <button id="draw-again">Girar Novamente</button>
+            <button id="close-result">Fechar</button>
+        </div>
+    </div>
+
+    <!-- Adicione AQUI a tela de sorte -->
+    <div id="luck-screen" style="display:none;">
+        <h2>Iformções</h2>
+        <div id="luck-graph"></div>
+        <div id="luck-summary"></div>
+        <div class="result-buttons">
+            <button id="close-luck">Fechar</button>
+        </div>
+    </div>
+
     <script src="scripts/gacha.js"></script>
 </body>
 </html>

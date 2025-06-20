@@ -49,32 +49,34 @@ function drawItem() {
 
 // No pity também:
 function drawItemWithPity() {
-    totalSpins++; // Adicione esta linha no início da função
+    totalSpins++;
     if (spinCount >= 89) {
-    pityHistory.push(spinCount + 1);
-    const fiveStar = getRandomFiveStar();
-    spinCount = 0;
-    countFive++;
-    if (fiveStar.name === "qiqi") countQiqi++;
-    if (fiveStar.name === "mavuika") countMavuika++;
-    return fiveStar;
-}
+        pityHistory.push(spinCount + 1);
+        const fiveStar = getRandomFiveStar();
+        pityHistory[(pityHistory.length - 1) + "_who"] = fiveStar.name; // Salva quem foi
+        spinCount = 0;
+        countFive++;
+        if (fiveStar.name === "qiqi") countQiqi++;
+        if (fiveStar.name === "mavuika") countMavuika++;
+        return fiveStar;
+    }
 
-const item = drawItem();
-if (item.rarity === "★★★★★") {
-    pityHistory.push(spinCount + 1);
-    spinCount = 0;
-    countFive++;
-    if (item.name === "qiqi") countQiqi++;
-    if (item.name === "mavuika") countMavuika++;
-} else {
-    spinCount++;
-    if (item.rarity === "★★★★") countFour++;
-    else if (item.rarity === "★★★") countThree++;
-    else if (item.rarity === "★★") countTwo++;
-    else if (item.rarity === "★") countOne++;
-}
-return item;
+    const item = drawItem();
+    if (item.rarity === "★★★★★") {
+        pityHistory.push(spinCount + 1);
+        pityHistory[(pityHistory.length - 1) + "_who"] = item.name; // Salva quem foi
+        spinCount = 0;
+        countFive++;
+        if (item.name === "qiqi") countQiqi++;
+        if (item.name === "mavuika") countMavuika++;
+    } else {
+        spinCount++;
+        if (item.rarity === "★★★★") countFour++;
+        else if (item.rarity === "★★★") countThree++;
+        else if (item.rarity === "★★") countTwo++;
+        else if (item.rarity === "★") countOne++;
+    }
+    return item;
 }
 
 function displayResult(item) {
@@ -179,3 +181,73 @@ document.getElementById("show-history").addEventListener("click", function() {
 document.getElementById("close-history").addEventListener("click", function() {
     document.getElementById("history-screen").style.display = "none";
 });
+document.getElementById("luck-level").addEventListener("click", function() {
+    // Fecha o histórico de giros, se estiver aberto
+    document.getElementById("history-screen").style.display = "none";
+    // Mostra a tela de sorte
+    document.getElementById("luck-screen").style.display = "flex";
+    renderLuckGraph();
+});
+
+document.getElementById("close-luck").addEventListener("click", function() {
+    document.getElementById("luck-screen").style.display = "none";
+});
+
+function renderLuckGraph() {
+    const graph = document.getElementById("luck-graph");
+    const summary = document.getElementById("luck-summary");
+    graph.innerHTML = "";
+
+    if (pityHistory.length === 0) {
+        summary.textContent = "Nenhum 5 estrelas ainda para calcular o nível de sorte.";
+        return;
+    }
+
+    // Cria barras para cada 5 estrelas
+    let total = 0;
+    let qiqiCount = 0;
+    let mavuikaCount = 0;
+    let unlucky = 0;
+    let bars = pityHistory.map((pity, i) => {
+        let barClass = "luck-bar normal";
+        let label = "5★";
+        // Descobre quem foi o personagem
+        let who = "";
+        if (pityHistory[i + "_who"]) who = pityHistory[i + "_who"];
+        if (who === "qiqi") {
+            barClass = "luck-bar qiqi";
+            label = "qiqi";
+            qiqiCount++;
+        } else if (who === "mavuika") {
+            barClass = "luck-bar mavuika";
+            label = "mavuika";
+            mavuikaCount++;
+        }
+        if (pity > 75) unlucky++;
+        total += pity;
+        return `<div class="${barClass}" style="height:${Math.min(pity * 2, 200)}px" title="Giro #${i+1}: ${pity}">${label}<br>${pity}</div>`;
+    });
+
+    graph.innerHTML = bars.join("");
+
+    // Cálculo de sorte
+    const media = total / pityHistory.length;
+    let sorte = 100 - (media * 1.2); // Quanto menor a média, maior a sorte
+    sorte -= qiqiCount * 10; // Cada qiqi abaixa a sorte
+    if (sorte < 0) sorte = 0;
+    if (sorte > 100) sorte = 100;
+
+    let mensagem = "";
+    if (media <= 30) mensagem = "Incrível! Você está com muita sorte!";
+    else if (media <= 60) mensagem = "Boa sorte!";
+    else mensagem = "Continue tentando, sua sorte vai melhorar!";
+    if (unlucky > 0) mensagem += `<br><span style="color:#ffb300;">Você demorou muito para conseguir ${unlucky} vez(es)!</span>`;
+    if (qiqiCount > 0) mensagem += `<br><span style="color:#a259ec;">Pegou qiqi ${qiqiCount} vez(es), isso abaixou sua sorte!</span>`;
+
+    summary.innerHTML = `
+        <strong>Média de giros para cada 5 estrelas:</strong> ${media.toFixed(2)}<br>
+        <strong>Sorte geral:</strong> ${sorte.toFixed(1)} / 100<br>
+        <strong>5★ obtidos:</strong> ${pityHistory.length} (qiqi: ${qiqiCount}, mavuika: ${mavuikaCount})<br>
+        ${mensagem}
+    `;
+}

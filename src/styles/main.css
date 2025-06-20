@@ -148,6 +148,15 @@ h1 {
     padding: 10px 20px;
     cursor: pointer;
 }
+#luck-level {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
 
 .top-bar {
     display: flex;
@@ -181,4 +190,55 @@ h1 {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     margin-bottom: 30px;
    
+}
+#luck-screen {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 2100;
+}
+#luck-graph {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin: 30px 0 20px 0;
+    min-height: 120px;
+}
+.luck-bar {
+    width: 40px;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    font-size: 12px;
+    margin-bottom: 0;
+}
+.luck-bar.qiqi {
+    background: #007bff;
+}
+.luck-bar.mavuika {
+    background: #01448b
+}
+.luck-bar.normal {
+    background: #007bff;
+}
+#luck-summary {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.1em;
+}
+#close-luck {
+     background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
 }
