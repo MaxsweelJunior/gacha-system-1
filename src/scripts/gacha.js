@@ -81,11 +81,7 @@ function displayResult(item) {
     resultDiv.innerHTML = `voçe ganhou: <strong>${item.name}</strong> (<span class="${rarityClass}">${item.rarity}</span>)`;
 }
 
-// Altere o evento do botão de giro único:
-document.getElementById("draw-button").addEventListener("click", function() {
-    const drawnItem = drawItemWithPity();
-    displayResult(drawnItem);
-});
+
 // Altere o drawTenItems para usar o drawItemWithPity:
 function drawTenItems() {
     const results = [];
@@ -129,11 +125,10 @@ document.getElementById("draw-button").addEventListener("click", function() {
     updatePityDisplay();
 });
 
-// Listener para giro 10x
 document.getElementById("draw-ten-button").addEventListener("click", function() {
     drawTenItems();
     document.getElementById("meu-video").play();
-    updatePityDisplay(); // Atualiza o pity
+    updatePityDisplay(); // Aqui pode não funcionar corretamente
 });
 
 function displayTenResults(items) {
@@ -144,6 +139,7 @@ function displayTenResults(items) {
         return `voçe ganhou: <strong>${item.name}</strong> (<span class="${rarityClass}">${item.rarity}</span>)`;
     }).join("<br>");
     resultScreen.style.display = "flex";
+    updatePityDisplay(); // <-- Adicione aqui!
 }
 
 // Botão para fechar a tela de resultados
