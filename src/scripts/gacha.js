@@ -7,6 +7,8 @@ const items = [
     { name: "mavuika", tipy: "personagem", rarity: "★★★★★" }
     
 ];
+let lastSpinWasTen = false;
+
 let countQiqi = 0;
 let countMavuika = 0;
 
@@ -120,15 +122,17 @@ function updatePityDisplay() {
 
 // Listener para giro único
 document.getElementById("draw-button").addEventListener("click", function() {
+    lastSpinWasTen = false;
     const drawnItem = drawItemWithPity();
-    displayResult(drawnItem);
+    displayTenResults([drawnItem]);
     updatePityDisplay();
 });
 
 document.getElementById("draw-ten-button").addEventListener("click", function() {
+    lastSpinWasTen = true;
     drawTenItems();
     document.getElementById("meu-video").play();
-    updatePityDisplay(); // Aqui pode não funcionar corretamente
+    updatePityDisplay();
 });
 
 function displayTenResults(items) {
@@ -147,8 +151,13 @@ document.getElementById("close-result").addEventListener("click", function() {
     document.getElementById("result-screen").style.display = "none";
 });
 document.getElementById("draw-again").addEventListener("click", function() {
-    drawTenItems();
-    updatePityDisplay(); // Atualiza o pity
+    if (lastSpinWasTen) {
+        drawTenItems();
+    } else {
+        const drawnItem = drawItemWithPity();
+        displayTenResults([drawnItem]);
+    }
+    updatePityDisplay();
 });
 document.getElementById("show-history").addEventListener("click", function() {
     const historyScreen = document.getElementById("history-screen");
