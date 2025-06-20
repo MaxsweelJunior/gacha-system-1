@@ -7,25 +7,24 @@
     <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-   <video id="meu-video" width="100%" height="225" controls>
-  <source src="videos/meuvideo.mp4" type="video/mp4">
-  Seu navegador não suporta vídeo.
-</video>
+    <header class="main-header">
+    <h1 style="color: white;">Sistema Gacha</h1>
+</header>
     <div class="container">
-        <h1>Sistema Gacha</h1>
+    <div class="top-bar">
         <button id="draw-button">Girar</button>
         <button id="draw-ten-button">Girar 10x</button>
         <button id="show-history">Ver Histórico</button>
-
-<div id="history-screen" style="display:none;">
-    <h2>Histórico de Giros</h2>
-    <div id="history-list"></div>
-    <button id="close-history">Fechar</button>
-</div>
-        
-<span id="pity-value"></span>
-        <div id="result"></div>
+        <span id="pity-value"></span>
     </div>
+    <div id="history-screen" style="display:none;">
+        <h2>Histórico de Giros</h2>
+        <div id="history-list"></div>
+        <button id="close-history">Fechar</button>
+    </div>
+    <div id="result"></div>
+</div>
+    
     <div id="result-screen" style="display:none;">
     <h2>Resultados</h2>
     <div id="result-list"></div>
