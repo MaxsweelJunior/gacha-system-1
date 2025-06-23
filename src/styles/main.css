@@ -242,4 +242,27 @@ h1 {
     padding: 10px 20px;
     cursor: pointer;
 }
+#luck-percentage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+#luck-percentage-svg {
+    transform: rotate(-90deg);
+    margin-bottom: -10px;
+}
+#luck-percentage-bar {
+    transition: stroke-dashoffset 1s;
+    stroke: #007bff; /* alterado de verde para azul */
+}
+#luck-percentage-text {
+    position: relative;
+    top: -90px;
+    font-size: 2em;
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 4px #222;
+    pointer-events: none;
+}
 

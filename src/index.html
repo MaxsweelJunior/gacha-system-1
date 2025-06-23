@@ -39,13 +39,24 @@
 
     <!-- Adicione AQUI a tela de sorte -->
     <div id="luck-screen" style="display:none;">
-        <h2>Iformções</h2>
-        <div id="luck-graph"></div>
-        <div id="luck-summary"></div>
-        <div class="result-buttons">
-            <button id="close-luck">Fechar</button>
+    <h2>Iformções</h2>
+    <div id="luck-graph"></div>
+    <div id="luck-summary"></div>
+    <div id="luck-percentage-container">
+        <div id="luck-percentage-label" style="margin-bottom: 8px; font-size: 1.1em; color: #fff; font-weight: bold;">
+            Sorte geral: <span id="luck-percentage-value">0</span> / 100
         </div>
+        <svg id="luck-percentage-svg" width="120" height="120">
+            <circle cx="60" cy="60" r="50" stroke="#444" stroke-width="12" fill="none"/>
+            <circle id="luck-percentage-bar" cx="60" cy="60" r="50" stroke="#00e676" stroke-width="12" fill="none"
+                stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314"/>
+        </svg>
+        <div id="luck-percentage-text">0%</div>
     </div>
+    <div class="result-buttons">
+        <button id="close-luck">Fechar</button>
+    </div>
+</div>
 
     <script src="scripts/gacha.js"></script>
 </body>

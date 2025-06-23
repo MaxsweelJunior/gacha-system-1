@@ -199,11 +199,11 @@ function renderLuckGraph() {
     graph.innerHTML = "";
 
     if (pityHistory.length === 0) {
-        summary.textContent = "Nenhum 5 estrelas ainda para calcular o nível de sorte.";
+        setLuckPercentage(0);
+        summary.innerHTML = "";
         return;
     }
 
-    // Cria barras para cada 5 estrelas
     let total = 0;
     let qiqiCount = 0;
     let mavuikaCount = 0;
@@ -211,7 +211,6 @@ function renderLuckGraph() {
     let bars = pityHistory.map((pity, i) => {
         let barClass = "luck-bar normal";
         let label = "5★";
-        // Descobre quem foi o personagem
         let who = "";
         if (pityHistory[i + "_who"]) who = pityHistory[i + "_who"];
         if (who === "qiqi") {
@@ -230,24 +229,27 @@ function renderLuckGraph() {
 
     graph.innerHTML = bars.join("");
 
-    // Cálculo de sorte
     const media = total / pityHistory.length;
-    let sorte = 100 - (media * 1.2); // Quanto menor a média, maior a sorte
-    sorte -= qiqiCount * 10; // Cada qiqi abaixa a sorte
+    let sorte = 100 - (media * 1.2);
+    sorte -= qiqiCount * 10;
     if (sorte < 0) sorte = 0;
     if (sorte > 100) sorte = 100;
 
-    let mensagem = "";
-    if (media <= 30) mensagem = "Incrível! Você está com muita sorte!";
-    else if (media <= 60) mensagem = "Boa sorte!";
-    else mensagem = "Continue tentando, sua sorte vai melhorar!";
-    if (unlucky > 0) mensagem += `<br><span style="color:#ffb300;">Você demorou muito para conseguir ${unlucky} vez(es)!</span>`;
-    if (qiqiCount > 0) mensagem += `<br><span style="color:#a259ec;">Pegou qiqi ${qiqiCount} vez(es), isso abaixou sua sorte!</span>`;
+    setLuckPercentage(sorte);
 
     summary.innerHTML = `
-        <strong>Média de giros para cada 5 estrelas:</strong> ${media.toFixed(2)}<br>
-        <strong>Sorte geral:</strong> ${sorte.toFixed(1)} / 100<br>
-        <strong>5★ obtidos:</strong> ${pityHistory.length} (qiqi: ${qiqiCount}, mavuika: ${mavuikaCount})<br>
-        ${mensagem}
-    `;
+    <strong>Média de giros para cada 5 estrelas:</strong> ${media.toFixed(2)}<br>
+    <strong>5★ obtidos:</strong> ${pityHistory.length} (qiqi: ${qiqiCount}, mavuika: ${mavuikaCount})<br>
+`;
+}
+function setLuckPercentage(percent) {
+    const circle = document.getElementById("luck-percentage-bar");
+    const text = document.getElementById("luck-percentage-text");
+    const labelValue = document.getElementById("luck-percentage-value");
+    const radius = 50;
+    const circumference = 2 * Math.PI * radius;
+    const offset = circumference - (percent / 100) * circumference;
+    circle.style.strokeDashoffset = offset;
+    text.textContent = Math.round(percent) + "%";
+    if (labelValue) labelValue.textContent = percent.toFixed(1);
 }
