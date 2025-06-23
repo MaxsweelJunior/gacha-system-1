@@ -148,15 +148,6 @@ h1 {
     padding: 10px 20px;
     cursor: pointer;
 }
-#luck-level {
-    background-color: #007bff;
-    color: white;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-}
 
 .top-bar {
     display: flex;
@@ -190,6 +181,15 @@ h1 {
     box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     margin-bottom: 30px;
    
+}
+#luck-level {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
 }
 #luck-screen {
     position: fixed;
@@ -242,3 +242,4 @@ h1 {
     padding: 10px 20px;
     cursor: pointer;
 }
+
