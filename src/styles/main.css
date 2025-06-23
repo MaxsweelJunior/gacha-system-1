@@ -4,7 +4,15 @@ body {
     margin: 0;
     padding: 0;
 }
+button,
+.button {
+    transition: transform 0.15s, box-shadow 0.15s;
+}
 
+button:hover,
+.button:hover {
+    transform: scale(1.07);
+}
 .container {
     width: 90%;
     max-width: 6000%; /* ou outro valor que preferir */
