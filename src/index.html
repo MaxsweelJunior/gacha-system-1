@@ -57,7 +57,39 @@
         <button id="close-luck">Fechar</button>
     </div>
 </div>
+<div id="rarity-animation" style="display:none;">
+    <div id="rarity-animation-content"></div>
+</div>
 
-    <script src="scripts/gacha.js"></script>
+<!-- Adicione AQUI a tela de configurações -->
+<div id="config-screen" style="display:none;">
+    <h2>Configurações</h2>
+    <div id="config-content">
+        <p>Exemplo de configuração:</p>
+        <label>
+            <input type="checkbox" id="sound-toggle">
+            Ativar sons do gacha
+        </label>
+        <!-- Adicione mais opções conforme necessário -->
+    </div>
+    <div class="result-buttons">
+        <button id="close-config">Fechar</button>
+    </div>
+</div>
+
+<script src="scripts/gacha.js"></script>
+<div id="content">
+    <!-- Seu conteúdo principal aqui -->
+</div>
+<footer id="footer-buttons">
+    <button class="footer-btn" onclick="window.scrollTo(0,0)">Topo</button>
+    <button onclick="showNormalPage()">Configurações</button>
+</footer>
+<footer id="main-footer">
+    © 2025 Sistema Gacha. Desenvolvido por maxsweel.
+</footer>
+<script>
+
+</script>
 </body>
 </html>

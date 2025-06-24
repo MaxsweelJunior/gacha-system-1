@@ -273,4 +273,81 @@ h1 {
     text-shadow: 1px 1px 4px #222;
     pointer-events: none;
 }
+#rarity-animation {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 4000;
+}
+#rarity-animation-content {
+    /* Aqui você pode animar, trocar imagens, etc */
+}
+#main-footer {
+    background: #007bff;
+    color: white;
+    text-align: center;
+    padding: 16px 0;
+    margin-top: 0;
+}
 
+#footer-buttons {
+    background: #005fc4;
+    color: white;
+    text-align: center;
+    padding: 12px 0;
+    margin-top: 0;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    /* Removido qualquer position: fixed; para que fique colado ao rodapé principal */
+}
+
+.footer-btn {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 18px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.footer-btn:hover {
+    transform: scale(1.07);
+    box-shadow: 0 4px 16px rgba(0, 123, 255, 0.18);
+}
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* O conteúdo principal cresce para ocupar o espaço disponível */
+#content, .content, .main-content {
+    flex: 1 0 auto;
+}
+
+/* Os rodapés não encolhem e ficam juntos no final */
+#footer-buttons,
+#main-footer {
+    flex-shrink: 0;
+}
+#config-btn {
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 18px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+}

@@ -132,9 +132,20 @@ document.getElementById("draw-button").addEventListener("click", function() {
 
 document.getElementById("draw-ten-button").addEventListener("click", function() {
     lastSpinWasTen = true;
-    drawTenItems();
-    document.getElementById("meu-video").play();
-    updatePityDisplay();
+    const results = drawTenItems();
+
+    // Descobre a maior raridade do giro
+    const raridades = results.map(item => item.rarity);
+    let maior = "★";
+    if (raridades.includes("★★★★★")) maior = "★★★★★";
+    else if (raridades.includes("★★★★")) maior = "★★★★";
+    else if (raridades.includes("★★★")) maior = "★★★";
+
+    showRarityAnimation(maior, () => {
+        displayTenResults(results);
+        if (document.getElementById("meu-video")) document.getElementById("meu-video").play();
+        updatePityDisplay();
+    });
 });
 
 function displayTenResults(items) {
@@ -252,4 +263,54 @@ function setLuckPercentage(percent) {
     circle.style.strokeDashoffset = offset;
     text.textContent = Math.round(percent) + "%";
     if (labelValue) labelValue.textContent = percent.toFixed(1);
+}
+function showRarityAnimation(rarity, callback) {
+    const anim = document.getElementById("rarity-animation");
+    const content = document.getElementById("rarity-animation-content");
+    // Troque o conteúdo abaixo pela sua animação para cada raridade
+    if (rarity === "★★★★★") {
+        content.innerHTML = '<div class="anim-five">Animação 5★</div>';
+    } else if (rarity === "★★★★") {
+        content.innerHTML = '<div class="anim-four">Animação 4★</div>';
+    } else if (rarity === "★★★") {
+        content.innerHTML = '<div class="anim-three">Animação 3★</div>';
+    } else {
+        content.innerHTML = '';
+    }
+    anim.style.display = "flex";
+    setTimeout(() => {
+        anim.style.display = "none";
+        if (callback) callback();
+    }, 1500); // 1.5s de animação, ajuste como quiser
+}
+function showNormalPage() {
+    // Cria o overlay da página
+    let normalPage = document.getElementById("normal-page");
+    if (!normalPage) {
+        normalPage = document.createElement("div");
+        normalPage.id = "normal-page";
+        normalPage.style.position = "fixed";
+        normalPage.style.top = "0";
+        normalPage.style.left = "0";
+        normalPage.style.width = "100vw";
+        normalPage.style.height = "100vh";
+        normalPage.style.background = "rgba(0,0,0,0.7)";
+        normalPage.style.display = "flex";
+        normalPage.style.alignItems = "center";
+        normalPage.style.justifyContent = "center";
+        normalPage.style.zIndex = "9999";
+        normalPage.innerHTML = `
+            <div style="background:#fff; padding:32px 40px; border-radius:12px; box-shadow:0 4px 24px #0003; text-align:center;">
+                <h2>Página Normal</h2>
+                <p>Conteúdo da página normal aqui.</p>
+                <button id="close-normal-page" style="margin-top:20px; padding:10px 24px; background:#007bff; color:#fff; border:none; border-radius:6px; font-size:1em; cursor:pointer;">Fechar</button>
+            </div>
+        `;
+        document.body.appendChild(normalPage);
+        document.getElementById("close-normal-page").onclick = function() {
+            normalPage.remove();
+        };
+    } else {
+        normalPage.style.display = "flex";
+    }
 }

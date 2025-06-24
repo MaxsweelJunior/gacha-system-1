@@ -43,5 +43,3 @@ If you would like to contribute to this project, please fork the repository and 
 This project is licensed under the MIT License. See the LICENSE file for details.
 
 https://github.com/MaxsweelJunior/gacha-system-1.git
-
-o botão nivel de sorte deve abrir uma pagina assim como o resultados e a pagina deve ter um grafico com obijetos para exemplificar melhor e o grafico deve ter um resultado geral de todos os giros ate 5 estrelas e calcular se demorou muito para conseguir um alem de que se pegar a qiqi a sorte tambem devera abaixar
