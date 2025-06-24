@@ -284,7 +284,6 @@ function showRarityAnimation(rarity, callback) {
     }, 1500); // 1.5s de animação, ajuste como quiser
 }
 function showNormalPage() {
-    // Cria o overlay da página
     let normalPage = document.getElementById("normal-page");
     if (!normalPage) {
         normalPage = document.createElement("div");
@@ -302,15 +301,46 @@ function showNormalPage() {
         normalPage.innerHTML = `
             <div style="background:#fff; padding:32px 40px; border-radius:12px; box-shadow:0 4px 24px #0003; text-align:center;">
                 <h2>Página Normal</h2>
-                <p>Conteúdo da página normal aqui.</p>
+                <p>Use o botão abaixo para trocar os nomes dos 5 estrelas para Phainon e Blade!</p>
+                <button id="swap-five-stars-btn" style="margin:10px 0 0 0; padding:10px 24px; background:#28a745; color:#fff; border:none; border-radius:6px; font-size:1em; cursor:pointer;">Trocar Nomes dos 5★</button><br>
                 <button id="close-normal-page" style="margin-top:20px; padding:10px 24px; background:#007bff; color:#fff; border:none; border-radius:6px; font-size:1em; cursor:pointer;">Fechar</button>
             </div>
         `;
         document.body.appendChild(normalPage);
+
         document.getElementById("close-normal-page").onclick = function() {
             normalPage.remove();
         };
+
+        document.getElementById("swap-five-stars-btn").onclick = function() {
+    // Troca os nomes dos personagens 5 estrelas para Phainon e Blade
+    const fiveStars = items.filter(item => item.rarity === "★★★★★");
+    if (fiveStars.length >= 2) {
+        fiveStars[0].name = "phainon";
+        fiveStars[1].name = "blade";
+    }
+    // Atualiza todas as menções nos históricos
+    for (let i = 0; i < pityHistory.length; i++) {
+        if (pityHistory[i + "_who"] === "qiqi") pityHistory[i + "_who"] = "phainon";
+        if (pityHistory[i + "_who"] === "mavuika") pityHistory[i + "_who"] = "blade";
+    }
+
+    // Atualiza os contadores para aparecerem no histórico
+    countPhainon = countQiqi;
+    countBlade = countMavuika;
+
+    alert("Nomes dos 5 estrelas trocados para phainon e blade!");
+
+    // Atualiza o histórico e o mais informações se estiverem abertos
+    if (document.getElementById("history-screen").style.display === "flex") {
+        document.getElementById("show-history").click();
+    }
+    if (document.getElementById("luck-screen").style.display === "flex") {
+        renderLuckGraph();
+    }
+};
     } else {
         normalPage.style.display = "flex";
     }
+    
 }
