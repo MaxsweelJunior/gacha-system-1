@@ -1,13 +1,23 @@
-const items = [
-    { name: "Item", type: "item", rarity: "★" },
-    { name: "Item", type: "item", rarity: "★★" },
-    { name: "Item", type: "item", rarity: "★★★" },
-    { name: "Item", type: "item", rarity: "★★★★" },
-    { name: "qiqi", tipy: "personagem", rarity: "★★★★★" },
-    { name: "mavuika", tipy: "personagem", rarity: "★★★★★" }
-    
-];
+const banners = {
+    padrao: [
+        { name: "Item", type: "item", rarity: "★" },
+        { name: "Item", type: "item", rarity: "★★" },
+        { name: "Item", type: "item", rarity: "★★★" },
+        { name: "Item", type: "item", rarity: "★★★★" },
+        { name: "qiqi", tipy: "personagem", rarity: "★★★★★" },
+        { name: "mavuika", tipy: "personagem", rarity: "★★★★★" }
+    ],
+    evento: [
+        { name: "Item", type: "item", rarity: "★" },
+        { name: "Item", type: "item", rarity: "★★" },
+        { name: "Item", type: "item", rarity: "★★★" },
+        { name: "Item", type: "item", rarity: "★★★★" },
+        { name: "phainon", tipy: "personagem", rarity: "★★★★★" },
+        { name: "blade", tipy: "personagem", rarity: "★★★★★" }
+    ]
+};
 let lastSpinWasTen = false;
+let items = banners.padrao;
 
 let countQiqi = 0;
 let countMavuika = 0;
@@ -132,7 +142,7 @@ document.getElementById("draw-button").addEventListener("click", function() {
 
 document.getElementById("draw-ten-button").addEventListener("click", function() {
     lastSpinWasTen = true;
-    const results = drawTenItems();
+    const results = drawTenItems(); // <-- Adicione esta linha!
 
     // Descobre a maior raridade do giro
     const raridades = results.map(item => item.rarity);
@@ -264,25 +274,6 @@ function setLuckPercentage(percent) {
     text.textContent = Math.round(percent) + "%";
     if (labelValue) labelValue.textContent = percent.toFixed(1);
 }
-function showRarityAnimation(rarity, callback) {
-    const anim = document.getElementById("rarity-animation");
-    const content = document.getElementById("rarity-animation-content");
-    // Troque o conteúdo abaixo pela sua animação para cada raridade
-    if (rarity === "★★★★★") {
-        content.innerHTML = '<div class="anim-five">Animação 5★</div>';
-    } else if (rarity === "★★★★") {
-        content.innerHTML = '<div class="anim-four">Animação 4★</div>';
-    } else if (rarity === "★★★") {
-        content.innerHTML = '<div class="anim-three">Animação 3★</div>';
-    } else {
-        content.innerHTML = '';
-    }
-    anim.style.display = "flex";
-    setTimeout(() => {
-        anim.style.display = "none";
-        if (callback) callback();
-    }, 1500); // 1.5s de animação, ajuste como quiser
-}
 function showNormalPage() {
     let normalPage = document.getElementById("normal-page");
     if (!normalPage) {
@@ -344,3 +335,6 @@ function showNormalPage() {
     }
     
 }
+document.getElementById("banner-select").addEventListener("change", function() {
+    items = banners[this.value];
+});
